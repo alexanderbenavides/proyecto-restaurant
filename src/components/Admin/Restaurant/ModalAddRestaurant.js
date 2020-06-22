@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Modal, Button } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import FormAddRestaurant from "./FormAddRestaurant";
 function rand() {
@@ -20,39 +20,39 @@ function getModalStyle() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    top: "2rem",
+    bottom: "2rem",
+    left: "2rem",
     position: "absolute",
-    width: 400,
+    width: 50 + "%",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    overflow: "auto",
+    height: "400px",
   },
 }));
 
 export default function SimpleModal() {
   const [titleModal, setTitleModal] = useState("Agregar restaurante");
+  const [open, setOpen] = React.useState(false);
+
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-
   const handleOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const getOpen = (is_open) => {
+    setOpen(is_open);
   };
-
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">{titleModal}</h2>
       <section id="simple-modal-description">
-        <FormAddRestaurant />
-        <br />
-        <Button variant="contained" onClick={handleClose}>
-          Cerrar
-        </Button>
+        <FormAddRestaurant open={getOpen} />
       </section>
     </div>
   );
