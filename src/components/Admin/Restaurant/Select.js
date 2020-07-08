@@ -12,10 +12,9 @@ export default function CustomizedSelects(props) {
     <>
       <NativeSelect
         id="select"
-        defaultValue="null"
         onChange={(e) => handleChangeSelect(e.target.value)}
+        value={placeholderData}
       >
-        <option value="null">{placeholderData}</option>
         {selectData
           ? selectData.map((obj, key) => {
               return (

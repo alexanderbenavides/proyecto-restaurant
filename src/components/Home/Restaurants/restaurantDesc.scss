@@ -1,16 +1,66 @@
 .restaurant-description {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   margin: 1rem;
   gap: 1rem;
+  @media screen and(min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .grid {
     border: 1px solid #f2f2f2;
     padding: 1rem;
     background-color: #ffffff;
+
+    .rating-services {
+      display: flex;
+      justify-content: space-between;
+      .service {
+        display: flex;
+        span {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+    .rating-value {
+      position: relative;
+      strong {
+        position: absolute;
+        font-size: 1.2rem;
+        top: -3px;
+      }
+    }
+  }
+
+  .information {
+    p {
+      display: flex;
+      a,
+      span {
+        margin-left: 0.5rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
   }
 }
 
-// .restaurant-description div {
-//   border: 1px solid #f2f2f2;
-//   padding: 1rem;
-// }
+i {
+  margin-right: 0.4rem;
+  font-size: 1.2rem;
+  margin-right: 0.1rem;
+}
+.dot {
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+.unchecked {
+  background-color: white;
+  border: 1px solid green;
+  height: 1.1rem;
+  width: 1.1rem;
+}

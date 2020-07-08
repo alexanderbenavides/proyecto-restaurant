@@ -1,9 +1,11 @@
 .index-admin {
   margin: 2rem 1rem;
   display: grid;
-  grid-template-columns: 1fr 3fr;
   gap: 1rem;
 
+  @media screen and(min-width: 768px) {
+    grid-template-columns: 1fr 3fr;
+  }
   .layout-admin {
     background-color: #ffffff;
     padding: 1rem;

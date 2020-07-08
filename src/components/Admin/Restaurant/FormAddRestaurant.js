@@ -25,22 +25,24 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
 }));
+const form = {
+  imageSrc: "",
+  name: "",
+  address: "",
+  country: "",
+  state: "",
+  zipCode: "",
+  category: "",
+  rating: 0,
+  reviewCount: 0,
+};
+
 export default function CenteredGrid(props) {
-  const { open } = props;
+  const { open, restaurantData } = props;
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
 
-  const [formData, setFormData] = useState({
-    imageSrc: "",
-    name: "",
-    address: "",
-    country: "",
-    state: "",
-    zipCode: "",
-    category: "",
-    rating: 0,
-    reviewCount: 0,
-  });
+  const [formData, setFormData] = useState(form);
 
   const classes = useStyles();
   const handleCloseModal = () => {
@@ -86,6 +88,10 @@ export default function CenteredGrid(props) {
     // open(false);
   };
   useEffect(() => {
+    if (restaurantData) {
+      setFormData(restaurantData);
+      getCountryId(restaurantData.country);
+    }
     getCountriesApi()
       .then((response) => {
         if (response.status === 200) {
@@ -101,7 +107,7 @@ export default function CenteredGrid(props) {
       .catch(() => {
         console.log("error");
       });
-  }, []);
+  }, [props]);
 
   return (
     <form onSubmit={sendFormData}>
@@ -113,6 +119,7 @@ export default function CenteredGrid(props) {
               <Input
                 required
                 id="my-input"
+                value={formData.name}
                 onChange={(e) => {
                   setDataToForm("name", e.target.value);
                 }}
@@ -125,6 +132,7 @@ export default function CenteredGrid(props) {
             <FormControl className="form-add">
               <InputLabel>Dirección</InputLabel>
               <Input
+                value={formData.address}
                 required
                 id="my-input"
                 onChange={(e) => {
@@ -139,7 +147,7 @@ export default function CenteredGrid(props) {
           <Paper className={classes.paper}>
             <FormControl className="form-add">
               <Select
-                placeholderData="País"
+                placeholderData={formData.country}
                 selectData={countries}
                 selectId={getCountryId}
               />
@@ -150,7 +158,7 @@ export default function CenteredGrid(props) {
           <Paper className={classes.paper}>
             <FormControl className="form-add">
               <Select
-                placeholderData="Ciudad"
+                placeholderData={formData.state}
                 selectData={states}
                 selectId={getStateId}
               />
@@ -162,6 +170,7 @@ export default function CenteredGrid(props) {
             <FormControl className="form-add">
               <InputLabel>Código postal</InputLabel>
               <Input
+                value={formData.zipCode}
                 required
                 id="my-input"
                 onChange={(e) => {
@@ -175,7 +184,7 @@ export default function CenteredGrid(props) {
           <Paper className={classes.paper}>
             <FormControl className="form-add">
               <Select
-                placeholderData="catergoría"
+                placeholderData="1"
                 selectData={getRestaurantCategoryApi()}
                 selectId={getCategoryId}
               />
@@ -187,6 +196,7 @@ export default function CenteredGrid(props) {
             <FormControl className="form-add">
               <InputLabel>Rating</InputLabel>
               <Input
+                value={formData.rating}
                 required
                 type="number"
                 id="my-input"
@@ -202,6 +212,7 @@ export default function CenteredGrid(props) {
             <FormControl className="form-add">
               <InputLabel>Comentarios</InputLabel>
               <Input
+                value={formData.reviewCount}
                 type="number"
                 required
                 id="my-input"

@@ -1,60 +1,83 @@
-import React from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-const restuarantData = [
-  {
-    imageSrc: "",
-    name: "restaurant 1",
-    address: "Lima av. Javier Prado",
-    country: "Perú",
-    state: "Lima",
-    zipCode: "+ 51",
-    category: "Gourmet",
-    rating: 4.5,
-    reviewCount: 90,
-  },
-];
+import React, { useState } from "react";
+import Popover from "@material-ui/core/Popover";
+import restaurantData from "../../../api/restaurant";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import "./_restaurant_list.scss";
 
-export default function SimpleTable() {
+export default function SimpleTable(props) {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const { receive } = props;
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpen = (item) => {
+    receive(item);
+  };
+
+  const open = Boolean(anchorEl);
+
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Imagen</TableCell>
-            <TableCell align="right">Nombre</TableCell>
-            <TableCell align="right">Dirección</TableCell>
-            <TableCell align="right">País</TableCell>
-            <TableCell align="right">Ciudad</TableCell>
-            <TableCell align="right">Código postal</TableCell>
-            <TableCell align="right">Categoría</TableCell>
-            <TableCell align="right">Rating</TableCell>
-            <TableCell align="right">Comentarios</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {restuarantData.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell component="th" scope="row">
-                <img src={row.imageSrc} alt="not iamge"></img>
-              </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.address}</TableCell>
-              <TableCell align="right">{row.country}</TableCell>
-              <TableCell align="right">{row.state}</TableCell>
-              <TableCell align="right">{row.zipCode}</TableCell>
-              <TableCell align="right">{row.category}</TableCell>
-              <TableCell align="right">{row.rating}</TableCell>
-              <TableCell align="right">{row.reviewCount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className="main-container-table">
+      <section className="table-grid">
+        <div>Imagen</div>
+        <div>Nombre</div>
+        <div>Dirección</div>
+        <div>País</div>
+        <div>Ciudad</div>
+        <div>Código zip</div>
+        <div>Categoria</div>
+        <div>Rating</div>
+        <div>Comentarios</div>
+        <div></div>
+      </section>
+      {restaurantData.map((item, index) => {
+        return (
+          <section className="table-grid" key={index}>
+            <div text-responsive="Imagen">
+              <img src={item.imageSrc} />
+            </div>
+            <div text-responsive="Nombre">{item.name}</div>
+            <div text-responsive="Dirección">{item.address}</div>
+            <div text-responsive="País">{item.country}</div>
+            <div text-responsive="Ciudad">{item.state}</div>
+            <div text-responsive="Código zip">{item.zipCode}</div>
+            <div text-responsive="Categoría">{item.category}</div>
+            <div text-responsive="Rating">{item.rating}</div>
+            <div text-responsive="Comentarios">{item.reviewCount}</div>
+            <div text-responsive="...">
+              <MoreVertIcon onClick={handleClick} />
+              <Popover
+                id={index}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+              >
+                <section className="icons-table">
+                  <EditIcon onClick={() => handleOpen(item)} />
+                  <DeleteIcon />
+                </section>
+              </Popover>
+            </div>
+          </section>
+        );
+      })}
+    </div>
   );
 }

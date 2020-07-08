@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Modal } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
@@ -34,7 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal() {
+export default function SimpleModal(props) {
+  const { restaurantData } = props;
+
+  useEffect(() => {
+    if (restaurantData) {
+      setOpen(true);
+    }
+  }, [props]);
   const [titleModal, setTitleModal] = useState("Agregar restaurante");
   const [open, setOpen] = React.useState(false);
 
@@ -52,7 +59,7 @@ export default function SimpleModal() {
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">{titleModal}</h2>
       <section id="simple-modal-description">
-        <FormAddRestaurant open={getOpen} />
+        <FormAddRestaurant open={getOpen} restaurantData={restaurantData} />
       </section>
     </div>
   );
