@@ -53,7 +53,7 @@ export default function SimpleTable(props) {
             <div text-responsive="Categoría">{item.category}</div>
             <div text-responsive="Rating">{item.rating}</div>
             <div text-responsive="Comentarios">{item.reviewCount}</div>
-            <div text-responsive="...">
+            <div text-responsive="">
               <MoreVertIcon onClick={handleClick} />
               <Popover
                 id={index}

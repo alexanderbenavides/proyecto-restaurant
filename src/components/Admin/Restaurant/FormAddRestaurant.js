@@ -91,6 +91,8 @@ export default function CenteredGrid(props) {
     if (restaurantData) {
       setFormData(restaurantData);
       getCountryId(restaurantData.country);
+    } else {
+      setFormData(form);
     }
     getCountriesApi()
       .then((response) => {

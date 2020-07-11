@@ -36,13 +36,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleModal(props) {
   const { restaurantData } = props;
+  const [newData, setNewData] = useState(false);
 
   useEffect(() => {
     if (restaurantData) {
       setOpen(true);
+      setNewData(restaurantData);
     }
   }, [props]);
-  const [titleModal, setTitleModal] = useState("Agregar restaurante");
+  const [titleModal, setTitleModal] = useState("Editar restaurante");
   const [open, setOpen] = React.useState(false);
 
   const classes = useStyles();
@@ -50,16 +52,19 @@ export default function SimpleModal(props) {
   const [modalStyle] = React.useState(getModalStyle);
   const handleOpen = () => {
     setOpen(true);
+    setNewData(false);
+    setTitleModal("Agregar restaurante");
   };
 
   const getOpen = (is_open) => {
     setOpen(is_open);
+    setTitleModal("Editar restaurante");
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">{titleModal}</h2>
       <section id="simple-modal-description">
-        <FormAddRestaurant open={getOpen} restaurantData={restaurantData} />
+        <FormAddRestaurant open={getOpen} restaurantData={newData} />
       </section>
     </div>
   );
